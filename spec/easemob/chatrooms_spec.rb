@@ -120,4 +120,25 @@ RSpec.describe Easemob::Chatrooms do
       expect(h1['data'].count).to eq 2
     end
   end
+
+  describe '#chatroom_mute_users' do
+    it 'Can mute multi users from a chatroom' do
+      res = Easemob.chatroom_mute_users($easemob_rspec_chatroom_c_id, usernames: %w(u1))
+      expect(res.code).to eq 200
+      h1 = JSON.parse res.body.to_s
+      expect(h1['data'][0]['result']).to be true
+      expect(h1['data'][0]['user']).to eq 'u1'
+    end
+  end
+
+  describe '#chatroom_del_mute_users' do
+    it 'Can del mute multi users from a chatroom' do
+      res = Easemob.chatroom_remove_mute_users($easemob_rspec_chatroom_c_id, usernames: %w(u1))
+      expect(res.code).to eq 200
+      h1 = JSON.parse res.body.to_s
+      expect(h1['data'][0]['result']).to be true
+      expect(h1['data'][0]['user']).to eq 'u1'
+    end
+  end
+
 end

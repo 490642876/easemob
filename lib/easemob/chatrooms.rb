@@ -45,5 +45,17 @@ module Easemob
     def chatroom_remove_users(chatroom_id, usernames:)
       request :delete, "chatrooms/#{chatroom_id}/users/#{[*usernames].join(',')}"
     end
+
+    def chatroom_mute_users(chatroom_id, usernames:, mute_duration: 0)
+      jd = {}
+      jd[:usernames] = [*usernames]
+      jd[:mute_duration] = mute_duration
+      request :post, "chatrooms/#{chatroom_id}/mute", json: jd
+    end
+
+    def chatroom_remove_mute_users(chatroom_id, usernames:)
+      request :delete, "chatrooms/#{chatroom_id}/mute/#{[*usernames].join(',')}"
+    end
+
   end
 end
