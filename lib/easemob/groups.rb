@@ -70,5 +70,16 @@ module Easemob
     def remove_from_group_block(group_id, blocked_usernames:)
       GroupMessage.new request :delete, "chatgroups/#{group_id}/blocks/users/#{[*blocked_usernames].join(',')}"
     end
+
+    def group_mute_users(group_id, usernames:, mute_duration: 0)
+      jd = {}
+      jd[:usernames] = [*usernames]
+      jd[:mute_duration] = mute_duration
+      GroupMessage.new request :post, "chatgroups/#{group_id}/mute", json: jd
+    end
+
+    def group_remove_mute_users(group_id, usernames:)
+      GroupMessage.new request :delete, "chatgroups/#{group_id}/mute/#{[*usernames].join(',')}"
+    end
   end
 end
