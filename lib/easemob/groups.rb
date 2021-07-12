@@ -81,5 +81,9 @@ module Easemob
     def group_remove_mute_users(group_id, usernames:)
       GroupMessage.new request :delete, "chatgroups/#{group_id}/mute/#{[*usernames].join(',')}"
     end
+
+    def group_add_admin(group_id, username:)
+      GroupMessage.new request :post, "chatgroups/#{group_id}/admin", json: { newadmin: username }
+    end
   end
 end
